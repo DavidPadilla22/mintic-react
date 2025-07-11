@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { auth, googleProvider } from '../../../firebase';
+import { signInWithPopup } from 'firebase/auth';
 
 const usuarios = [
   { email: "obed@gmail.com", password: "1234" },
@@ -17,6 +19,7 @@ const usuarios = [
 ];
 
 function LoginPage() {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -39,9 +42,9 @@ function LoginPage() {
 
     if (usuarioValido) {
       Swal.fire({
-        title: "¡Bienvenido!",
-        text: "Inicio de sesión exitoso.",
-        icon: "success",
+        title: '¡Bienvenido!',
+        text: 'Inicio de sesión exitoso.',
+        icon: 'success',
         timer: 2000,
         showConfirmButton: false
       }).then(() => {
@@ -51,6 +54,28 @@ function LoginPage() {
       Swal.fire("Error", "Correo o contraseña incorrectos.", "error");
     }
   };
+
+const handleGoogleLogin = () => {
+  signInWithPopup(auth, googleProvider)
+  .then((result) => {
+const user = result.user;
+Swal.fire({
+  title: '¡Bienvenido!',
+  text: `Sesion iniciada con Google: ${user.email}`,
+  icon: 'success',
+  timer: 2000,
+  showConfirmButton: false
+}).then(() => {
+  window.location.href = '/dashboard';
+});
+  })
+  .catch((error) => {
+  console.error(error);
+  Swal.fire("Error", "No se puede iniciar sesion con Google.", "error");
+  });
+};
+
+
 
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
@@ -95,6 +120,10 @@ function LoginPage() {
             <div className="text-center">
               <button type="submit" className="btn btn-primary w-100">Entrar</button>
             </div>
+
+            <button type="button" onClick={handleGoogleLogin}>
+              Iniciar sesion con Google
+            </button>
             <br />
             <div className="text-center">
               <small className="text-muted">
