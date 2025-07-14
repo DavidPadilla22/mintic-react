@@ -5,9 +5,11 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage';
 import HomePage from './pages/HomePage/HomePage';
 import MyComponent from './pages/Playground/useState';
-import Contador from './pages/Playground/useState';
 import ContadorConMensaje from './pages/Playground/useEffect';
 import EnfocarInput from './pages/Playground/useRef';
+import NotFoundPage from './pages/Components/NotFoundPage';
+// Protege rutas con autenticación Firebase
+import ProtectedRoute from './pages/Components/ProtectedRoute';
 
 function App() {
   return (
@@ -20,6 +22,13 @@ function App() {
       <Route path="/use" element={<ContadorConMensaje/>} />
       <Route path="/contar" element={<MyComponent/>} />
       <Route path="/enfocar" element={<EnfocarInput/>} />
+
+      
+        {/* Ruta protegida con Firebase Auth */}
+        <Route path="/dashboard" element={<ProtectedRoute> <HomePage /> </ProtectedRoute> } />
+
+        {/* Ruta genérica para páginas no encontradas */}
+        <Route path="*" element={<NotFoundPage />} />
 
     </Routes>
   </BrowserRouter>

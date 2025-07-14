@@ -1,28 +1,27 @@
-
-import React, { useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from '../../../firebase';
-import { signInWithPopup } from 'firebase/auth';
-
-const usuarios = [
-  { email: "obed@gmail.com", password: "1234" },
-  { email: "maria@correo.com", password: "mar123" },
-  { email: "carlos@correo.com", password: "car123" },
-  { email: "laura@correo.com", password: "lau123" },
-  { email: "andres@correo.com", password: "and123" },
-  { email: "camila@correo.com", password: "cam123" },
-  { email: "david@correo.com", password: "dav123" },
-  { email: "paula@correo.com", password: "Pau123" },
-  { email: "jose@correo.com", password: "jos123" },
-  { email: "valentina@correo.com", password: "val123" }
-];
+import { signInWithPopup } from "firebase/auth";
+import './LoginPage.css';
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const usuarios = [
+    { email: "obed@gmail.com", password: "1234" },
+    { email: "maria@correo.com", password: "mar123" },
+    { email: "carlos@correo.com", password: "car123" },
+    { email: "laura@correo.com", password: "lau123" },
+    { email: "andres@correo.com", password: "and123" },
+    { email: "camila@correo.com", password: "cam123" },
+    { email: "david@correo.com", password: "dav123" },
+    { email: "paula@correo.com", password: "Pau123" },
+    { email: "jose@correo.com", password: "jos123" },
+    { email: "valentina@correo.com", password: "val123" }
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,9 +41,9 @@ function LoginPage() {
 
     if (usuarioValido) {
       Swal.fire({
-        title: '¡Bienvenido!',
-        text: 'Inicio de sesión exitoso.',
-        icon: 'success',
+        title: "¡Bienvenido!",
+        text: "Inicio de sesión exitoso.",
+        icon: "success",
         timer: 2000,
         showConfirmButton: false
       }).then(() => {
@@ -55,27 +54,25 @@ function LoginPage() {
     }
   };
 
-const handleGoogleLogin = () => {
-  signInWithPopup(auth, googleProvider)
-  .then((result) => {
-const user = result.user;
-Swal.fire({
-  title: '¡Bienvenido!',
-  text: `Sesion iniciada con Google: ${user.email}`,
-  icon: 'success',
-  timer: 2000,
-  showConfirmButton: false
-}).then(() => {
-  window.location.href = '/dashboard';
-});
-  })
-  .catch((error) => {
-  console.error(error);
-  Swal.fire("Error", "No se puede iniciar sesion con Google.", "error");
-  });
-};
-
-
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const user = result.user;
+        Swal.fire({
+          title: "¡Bienvenido!",
+          text: `Sesión iniciada con Google: ${user.email}`,
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          navigate("/home");
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire("Error", "No se pudo iniciar sesión con Google.", "error");
+      });
+  };
 
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
@@ -118,12 +115,14 @@ Swal.fire({
               </label>
             </div>
             <div className="text-center">
-              <button type="submit" className="btn btn-primary w-100">Entrar</button>
+              <button type="submit" className="btn btn-primary w-100 mb-2">Entrar</button>
+            </div>
+            <div className="text-center">
+              <button type="button" onClick={handleGoogleLogin} className="btn btn-danger w-100">
+                Iniciar sesión con Google
+              </button>
             </div>
 
-            <button type="button" onClick={handleGoogleLogin}>
-              Iniciar sesion con Google
-            </button>
             <br />
             <div className="text-center">
               <small className="text-muted">
@@ -131,12 +130,6 @@ Swal.fire({
               </small>
               <br />
               <a href="/forgot" className="fs-6">¿Olvidaste tu contraseña?</a>
-
-              <a href="/use" className="fs-6">contador</a>
-
-              <a href="/contar" className="fs-6">conter</a>
-              
-              <a href="/enfocar" className="fs-6">Enfocar</a>
             </div>
           </form>
         </div>
