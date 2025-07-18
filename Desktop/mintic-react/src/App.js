@@ -4,34 +4,34 @@ import LoginPage from './pages/LoginPage/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage';
 import HomePage from './pages/HomePage/HomePage';
+import Dashboard from './pages/DashboardPage/DashboardPage';
 import MyComponent from './pages/Playground/useState';
-import ContadorConMensaje from './pages/Playground/useEffect';
-import EnfocarInput from './pages/Playground/useRef';
+import MensajeCambio from './pages/Playground/useEffect';
+import ClickTracker from './pages/Playground/useRef';
+import ResetPasswordPage from './pages/ResetPasswordPage/ResetPasswordPage';
 import NotFoundPage from './pages/Components/NotFoundPage';
-// Protege rutas con autenticación Firebase
 import ProtectedRoute from './pages/Components/ProtectedRoute';
 
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/forgot" element={<ForgotPasswordPage />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/use" element={<ContadorConMensaje/>} />
-      <Route path="/contar" element={<MyComponent/>} />
-      <Route path="/enfocar" element={<EnfocarInput/>} />
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot" element={<ForgotPasswordPage />} />
+        <Route path="/MyComponent" element={<MyComponent />} />
+        <Route path="/Contador" element={<MensajeCambio />} />
+        <Route path="/click" element={<ClickTracker />} />
+        <Route path="/reset" element={<ResetPasswordPage />} />
 
-      
         {/* Ruta protegida con Firebase Auth */}
-        <Route path="/dashboard" element={<ProtectedRoute> <HomePage /> </ProtectedRoute> } />
+        <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
 
         {/* Ruta genérica para páginas no encontradas */}
         <Route path="*" element={<NotFoundPage />} />
 
-    </Routes>
-  </BrowserRouter>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

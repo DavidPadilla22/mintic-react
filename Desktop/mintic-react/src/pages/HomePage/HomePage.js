@@ -1,7 +1,5 @@
-// src/pages/HomePage.js
-import React from 'react';
-
 function HomePage() {
+
   return (
     <div className="container vh-100 d-flex justify-content-center align-items-center">
       <div className="text-center">
@@ -11,5 +9,6 @@ function HomePage() {
     </div>
   );
 }
+
 
 export default HomePage;
